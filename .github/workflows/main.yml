@@ -18,6 +18,9 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - name: read package.json
+        run: |
+          cat ${{ github.workspace }}/package.json
       - name: Extract version from package.json
         run: |
           PACKAGE_VERSION=awk '/version/{gsub(/("|",)/,"",$2);print $2}' ${{ github.workspace }}/package.json
