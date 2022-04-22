@@ -20,6 +20,6 @@ jobs:
           ls ${{ github.workspace }}
       - name: Extract version from package.json
         run: |
-          PACKAGE_VERSION=$perl -ne 'print "$1\n" if /"version":\s*"(.*?)"/' package.json
+          PACKAGE_VERSION=awk '/version/{gsub(/("|",)/,"",$2);print $2}' package.json
       # - run: echo "This is version no ${{ PACKAGE_VERSION }}."
       - run: echo "🍏 This job's status is ${{ job.status }}."
