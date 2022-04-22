@@ -16,8 +16,7 @@ jobs:
       - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "🖥️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
+      - run: ls ${{ github.workspace }}
       - name: Extract version from package.json
       - run: PACKAGE_VERSION=$perl -ne 'print "$1\n" if /"version":\s*"(.*?)"/' package.json
       - run: echo "This is version no ${{ PACKAGE_VERSION }}."
