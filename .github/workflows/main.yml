@@ -23,13 +23,19 @@ jobs:
       #     cat ${{ github.workspace }}/package.json
       - name: read package.json version
         run: |
-          grep version ${{ github.workspace }}/package.json | awk -F \" '{print $4}'
+          PACKAGE_VERSION=grep version ${{ github.workspace }}/package.json | awk -F \" '{print $4}'
       - name: List releases
         run: |
           gh release list 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+      - name: List releases
+        run: |
+          gh release create v${{ PACKAGE_VERSION }} --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
       # - name: Extract version from package.json
       #   run: |
       #     PACKAGE_VERSION=awk '/version/{gsub(/("|",)/,"",$2);print $2}' ${{ github.workspace }}/package.json
