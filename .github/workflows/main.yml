@@ -24,6 +24,10 @@ jobs:
       - name: read package.json version
         run: |
           grep version ${{ github.workspace }}/package.json | awk -F \" '{print $4}'
+      - name: List releases:
+        run: |
+          gh release list 
+          
       # - name: Extract version from package.json
       #   run: |
       #     PACKAGE_VERSION=awk '/version/{gsub(/("|",)/,"",$2);print $2}' ${{ github.workspace }}/package.json
