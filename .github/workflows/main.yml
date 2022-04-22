@@ -4,13 +4,14 @@ on:
   push:
     branches: main
     paths: 'package.json'
+jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
     steps:
-    - name: get-npm-version
-      id: package-version
-      uses: martinbeentjes/npm-get-version-action@main
-    - name: Run a one-line script
-      run: echo "Hello, world! ${{ job.status }} "
-    - run: echo "🍏 The current version number is ${{ steps.package-version.outputs.current-version}}  "
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
+      - name: Run a one-line script
+        run: echo "Hello, world! ${{ job.status }} "
+      - run: echo "🍏 The current version number is ${{ steps.package-version.outputs.current-version}}  "
