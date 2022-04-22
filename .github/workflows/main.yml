@@ -27,7 +27,9 @@ jobs:
       - name: List releases
         run: |
           gh release list 
-
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       # - name: Extract version from package.json
       #   run: |
       #     PACKAGE_VERSION=awk '/version/{gsub(/("|",)/,"",$2);print $2}' ${{ github.workspace }}/package.json
