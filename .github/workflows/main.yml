@@ -19,6 +19,6 @@ jobs:
           is_newer=`${{ github.workspace }}/semver.sh $package_version $current_version`
           [ $is_newer -ge 1 ] && gh release create v$package_version --generate-notes
 
-          dpkg --compare-versions $package_version $current_version
+          dpkg --compare-versions $package_version >= $current_version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
