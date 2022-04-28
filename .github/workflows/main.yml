@@ -5,21 +5,23 @@ on:
     branches: main
     paths: 'package.json'
 jobs:
-  Explore-GitHub-Actions:
+  Create-Github-Release:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
       - name: Read package.json version
-        run: grep version ${{ github.workspace }}/package.json | awk -F \" '{print $4}'
+        run: |
+          PACKAGE_VERSION=grep version ${{ github.workspace }}/package.json | awk -F \" '{print $4}'
+          echo "This is version no ${{ PACKAGE_VERSION }}."
       - name: List releases
-        run: gh release list 
+        run: gh release list --limit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create new Github release
-        run: gh release create v1.0.24 --generate-notes
+        run: gh release create v1.0.25 --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Extract version from package.json
-      #   run: |
-      #     PACKAGE_VERSION=awk '/version/{gsub(/("|",)/,"",$2);print $2}' ${{ github.workspace }}/package.json
-      # - run: echo "This is version no ${{ PACKAGE_VERSION }}."
+      #   run: 
       - run: echo "This job's status is ${{ job.status }}."
