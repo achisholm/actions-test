@@ -15,7 +15,7 @@ jobs:
           value=`grep version ${{ github.workspace }}/package.json | awk -F \" '{print $4}'`
           echo The result is $value.
           gh release list --limit 1
-          gh release create v1.0.33 --generate-notes
+          gh release create v$value --generate-notes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: echo "This job's status is ${{ job.status }}."
