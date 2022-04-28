@@ -17,6 +17,9 @@ jobs:
           # Check if package_version > current_version:
           ${{ github.workspace }}/semver.sh +x
           is_newer=`${{ github.workspace }}/semver.sh $package_version $current_version`
-          if is_newer==1 (gh release create v$package_version --generate-notes)
+          if is_newer==1
+          then
+            gh release create v$package_version --generate-notes)
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
