@@ -17,9 +17,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create new Github release
-        run: gh release create v1.0.23 --generate-notes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release create v1.0.24 --generate-notes
       # - name: Extract version from package.json
       #   run: |
       #     PACKAGE_VERSION=awk '/version/{gsub(/("|",)/,"",$2);print $2}' ${{ github.workspace }}/package.json
