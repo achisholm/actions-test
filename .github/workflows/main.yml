@@ -12,14 +12,14 @@ jobs:
         uses: actions/checkout@v3
       - name: Read package.json version
         run: |
-          PACKAGE_VERSION=grep version ${{ github.workspace }}/package.json | awk -F \" '{print $4}'
-          echo "This is version no ${{ PACKAGE_VERSION }}."
+          grep version ${{ github.workspace }}/package.json | awk -F \" '{print $4}'
+      # echo "This is version no ${{ PACKAGE_VERSION }}."
       - name: List releases
         run: gh release list --limit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create new Github release
-        run: gh release create v1.0.25 --generate-notes
+        run: gh release create v1.0.26 --generate-notes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Extract version from package.json
