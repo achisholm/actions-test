@@ -15,11 +15,10 @@ jobs:
           current_version=`gh release list --limit 1 | grep -oE  "([0-9]+)\.([0-9]+)\.([0-9]+)" | head -1`
           
           # Check if package_version > current_version:
-          is_newer=`dpkg --compare-versions $package_version gt $current_version`
-          echo $is_newer
-          
-          # [[ $is_newer == 0 ]] && gh release create v$package_version --generate-notes
+          ${{ github.workspace }}/semver.sh +x
+          is_newer=`${{ github.workspace }}/semver.sh $package_version $current_version`
+          [ $is_newer -ge 1 ] && gh release create v$package_version --generate-notes
 
-          
+          echo compare: `dpkg --compare-versions $package_version ge $current_version`
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
