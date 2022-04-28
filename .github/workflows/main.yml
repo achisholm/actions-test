@@ -16,7 +16,7 @@ jobs:
           
           # Check if package_version > current_version:
           is_newer=`dpkg --compare-versions $package_version gt $current_version`
-          [ $is_newer == 0 ] && gh release create v$package_version --generate-notes
+          [[ $is_newer == 0 ]] && gh release create v$package_version --generate-notes
 
           
         env:
