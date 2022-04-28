@@ -14,13 +14,13 @@ jobs:
         env:
           PACKAGE_VERSION: grep version ${{ github.workspace }}/package.json | awk -F \" '{print $4}'
         run: |
-          echo "This is version v${{ PACKAGE_VERSION }}."
+          echo "This is version v$PACKAGE_VERSION."
       - name: List releases
         run: gh release list --limit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create new Github release
-        run: gh release create v1.0.27 --generate-notes
+        run: gh release create v1.0.28 --generate-notes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: Extract version from package.json
