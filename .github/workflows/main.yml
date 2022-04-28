@@ -11,11 +11,15 @@ jobs:
         uses: actions/checkout@v3
       - name: Read package.json version
         run: |
+          
+          package_version2=`cat ${{ github.workspace }}/package.json | jq -r '.version'`
+          echo $package_version2
           package_version=`grep version ${{ github.workspace }}/package.json | awk -F \" '{print $4}'`
           current_version=`gh release list --limit 1 | grep -oE  "([0-9]+)\.([0-9]+)\.([0-9]+)" | head -1`
+          
           # Check if package_version > current_version:
           ${{ github.workspace }}/semver.sh +x
-          ${{ github.workspace }}/semver.sh $package_version $current_version
-          gh release create v$package_version --generate-notes
+          is_newer=`${{ github.workspace }}/semver.sh $package_version $current_version`
+          if is_newer==1 (gh release create v$package_version --generate-notes)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
