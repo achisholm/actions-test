@@ -14,16 +14,13 @@ jobs:
           fetch-depth: 0
       - name: Post a list of Netlify preview URLs to the opened pull request
         run: |
+          pr_number=$(echo $GITHUB_REF | cut -f3 -d/)
 
+          # Build a list of changed HTML files in /dev & post a comment to the PR -  https://cli.github.com/manual/gh_pr_comment
           for file in $(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -E "^dev.*\.html?$" | sed "s/^dev\///g")
           do 
             echo "https://${GITHUB_HEAD_REF}--tlc-dev.netlify.app/$file"
-          done
+          done | gh pr comment ${{ pr_number }} --body-file -
 
-          # Post a comment to the PR
-          # https://cli.github.com/manual/gh_pr_comment
-          pr_number=$(echo $GITHUB_REF | cut -f3 -d/)
-          
-          echo "gh pr comment $pr_number --body $URL_LIST"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
