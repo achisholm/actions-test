@@ -21,13 +21,9 @@ jobs:
           done
 
           # Post a comment to the PR
-          prefix="refs/pull/"
-          suffix="/merge"
-          pr_number=${GITHUB_REF#"$prefix"}
-          pr_number=${pr_number%"$suffix"}
-          echo "${pr_number}"
-
           # https://cli.github.com/manual/gh_pr_comment
-          gh pr comment $pr_number --body $URL_LIST
+          pr_number=$(echo $GITHUB_REF | cut -f3 -d/)
+          
+          echo "gh pr comment ${{ pr_number }} --body $URL_LIST"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
