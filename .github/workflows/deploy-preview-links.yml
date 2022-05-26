@@ -10,8 +10,16 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Post a list of Netlify preview URLs to the opened pull request
+        with:
+          fetch-depth: 0
+      - name: Post a list of Netlify preview URLs to the raised pull request
         run: |
-          git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }}
+          # Build a list of changed HTML files in /dev & post a comment to the PR
+          pr_number=$(echo $GITHUB_REF | cut -f3 -d/)
+          for file in $(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep -E "^dev.*\.html?$" | sed "s/^dev\///g")
+          do 
+            echo "https://${GITHUB_HEAD_REF}--tlc-dev.netlify.app/$file"
+          done | gh pr comment $pr_number --body-file -
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
