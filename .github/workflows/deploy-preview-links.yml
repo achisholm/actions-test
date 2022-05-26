@@ -24,6 +24,6 @@ jobs:
           # https://cli.github.com/manual/gh_pr_comment
           pr_number=$(echo $GITHUB_REF | cut -f3 -d/)
           
-          echo "gh pr comment ${{ pr_number }} --body $URL_LIST"
+          echo "gh pr comment $pr_number --body $URL_LIST"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
