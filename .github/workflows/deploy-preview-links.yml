@@ -20,6 +20,5 @@ jobs:
           do 
             echo "https://${GITHUB_HEAD_REF}--tlc-dev.netlify.app/$file"
           done | gh pr comment $pr_number --body-file -
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
