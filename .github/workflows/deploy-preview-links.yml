@@ -28,6 +28,6 @@ jobs:
           echo "${pr_number}"
 
           # https://cli.github.com/manual/gh_pr_comment
-          gh pr comment ${{ pr_number }} --body $URL_LIST
+          gh pr comment $pr_number --body $URL_LIST
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
