@@ -22,7 +22,7 @@ jobs:
           # https://[branch-name]--tlc-dev.netlify.app/[path]
           URL_LIST_CMD=`for file in $(eval $FILE_CMD | eval $STRIP_CMD)
           do 
-            echo "https://tlc-dev.netlify.app/$file"
+            echo 'https://${GITHUB_REF##*/}tlc-dev.netlify.app/$file'
           done`
           echo $URL_LIST
         env:
