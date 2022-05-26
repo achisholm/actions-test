@@ -16,7 +16,7 @@ jobs:
           FILE_CMD='git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep -E "^dev.*\.html?$"'
 
           # Command to strip off path portion which we don't want to include in URL (this strips and "./" found at the start of the file)
-          STRIP_CMD 'sed "sed "s/^dev//g"'
+          STRIP_CMD='sed "sed "s/^dev//g"'
 
           # Builds a list of URLs
           # https://[branch-name]--tlc-dev.netlify.app/[path]
