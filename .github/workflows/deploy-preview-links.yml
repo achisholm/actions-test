@@ -1,6 +1,8 @@
 name: Create Netlify deploy preview links
 on:
   pull_request:
+    types:
+      - opened
     paths:
       - 'dev/**/*.html'
       - 'dev/**/*.htm'
