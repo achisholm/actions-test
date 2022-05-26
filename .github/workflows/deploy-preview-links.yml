@@ -15,14 +15,14 @@ jobs:
           # Find and list all the html files changed in /dev
           FILE_CMD='git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep -E "^dev.*\.html?$"'
 
-          # Command to strip off path portion which we don't want to include in URL (this strips and "./" found at the start of the file)
+          # Command to strip off path portion which we don't want to include in URL (this strips and "dev" found at the start of the file)
           STRIP_CMD='sed "sed "s/^dev//g"'
 
           # Builds a list of URLs
           # https://[branch-name]--tlc-dev.netlify.app/[path]
           URL_LIST_CMD=`for file in $(eval $FILE_CMD | eval $STRIP_CMD)
           do 
-            echo 'https://${GITHUB_REF##*/}tlc-dev.netlify.app/$file'
+            echo 'https://${GITHUB_REF##*/}--tlc-dev.netlify.app/$file'
           done`
           echo $URL_LIST
         env:
